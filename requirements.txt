@@ -1,0 +1,26 @@
+# Data processing
+h5py
+numpy
+pandas
+scipy
+
+# Clustering & ML
+scikit-learn
+hdbscan
+umap-learn
+
+# Deep Learning (optional, uncomment if needed)
+# torch
+# tensorflow
+
+# Visualization
+matplotlib
+seaborn
+plotly
+
+# Evaluation
+scikit-learn>=1.0  # metrics
+
+# Jupyter
+jupyter
+ipykernel

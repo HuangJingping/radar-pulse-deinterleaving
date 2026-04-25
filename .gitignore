@@ -1,0 +1,35 @@
+# Dataset - DO NOT COMMIT
+# Download from: https://huggingface.co/datasets/TuringBombe/TSRD
+turing-radar-data.zip
+*.h5
+*.hdf5
+
+# Extracted data
+archive/
+scan/
+stare/
+.cache/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Environment
+.env
+venv/
+.venv/
