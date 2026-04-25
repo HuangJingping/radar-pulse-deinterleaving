@@ -82,13 +82,31 @@ process(action='log', session_id='proc_85357d2033e0')
 
 ## 📋 待完成任务
 
-### 阶段一：数据探索（未完成）
-- [ ] 加载 HDF5 数据，了解内部结构
-- [ ] 统计脉冲数量、发射器数量分布
-- [ ] 特征（5维）统计分析
-- [ ] 不平衡度分析
-- [ ] t-SNE/UMAP 可视化探索
-- [ ] Stare vs Scan 模式差异分析
+### 阶段一：数据探索（已完成 ✅）
+- [x] 加载 HDF5 数据，了解内部结构
+- [x] 统计脉冲数量、发射器数量分布
+- [x] 特征（5维）统计分析
+- [x] 不平衡度分析
+- [x] Stare vs Scan 模式差异分析
+- [ ] t-SNE/UMAP 可视化探索（可选，后续可视化阶段做）
+
+**数据探索关键发现：**
+
+| 数据集 | 脉冲数 | 发射器数 | 不平衡度 | 难度 |
+|--------|--------|---------|---------|------|
+| archive | 20k-47k | 7-78 | 3k-5k x | ⭐ 较易 |
+| scan | 59k-170k | 15-72 | 10k-23k x | ⭐⭐ 中等 |
+| stare | 550k-2M | 10-71 | 12k-129k x | ⭐⭐⭐ 最难 |
+
+**数据格式：**
+- `data`: (N, 5) float32, 特征=[ToA, Freq, PW, AoA, Amp]
+- `labels`: (N, 1) int8, 发射器标签 (0 到 N_emitters-1)
+- `metadata`: 接收机/发射器配置（频率模式、PRI模式等）
+
+**发射器行为模式：**
+- 频率: FixedSingle, FixedMultiSimultaneous, HoppingSawtooth, HoppingLinear, RandomRange...
+- PRI: Fixed, Staggered, Sliding, Jittered, SwitchDwell
+- 扫描: Circular, Omni
 
 ### 阶段二：数据预处理
 - [ ] 特征标准化方案对比
@@ -132,21 +150,20 @@ process(action='log', session_id='proc_85357d2033e0')
 
 **立即执行（当前会话）**:
 
-1. **等待解压完成** — 检查解压进度
-2. **开始数据探索** — 解压完成后，加载 HDF5 数据查看内部结构
+1. ~~数据探索~~ ✅ 已完成
+2. **开始阶段二：数据预处理** — 标准化、ToA→PRI转换
 
-**下一步具体任务**:
+**具体任务**:
 
 ```python
-# 第一步：加载数据查看结构
-import h5py
-import numpy as np
+# 加载数据
+from src.data_loader import TSRDLoader
+loader = TSRDLoader()
+data, labels, meta = loader.load_sample('archive/train/train_0.h5')
 
-# 查看一个样本
-with h5py.File('archive/train/xxx.h5', 'r') as f:
-    print(list(f.keys()))
-    print(f['pulses'].shape)
-    print(f['labels'].shape)  # 如果有标签
+# 下一步：标准化实验
+from sklearn.preprocessing import StandardScaler, MinMaxScaler
+# ...
 ```
 
 ---
